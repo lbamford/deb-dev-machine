@@ -681,6 +681,39 @@ installLocust() {
   breakLine;
 }
 
+# JAVA
+##########################################################
+installJAVA() {
+  title "Installing JAVA";
+  sudo apt update;
+  sudo apt install -y default-jdk;
+  java -version;
+  breakLine;
+}
+
+
+# Maven
+##########################################################
+installMVN() {
+  title "Installing Maven";
+  sudo apt update;
+  sudo apt install -y maven;
+  mvn -version;
+  breakLine;
+}
+
+# Netbeans
+##########################################################
+installNetbeans() {
+  installJAVA;;
+  title "Installing Netbeans";
+  sudo apt update;
+  sudo apt install -y netbeans;
+  
+  breakLine;
+}
+
+
 ###############################################################
 ## MAIN PROGRAM
 ###############################################################
@@ -711,8 +744,8 @@ options=(
     15 "Docker CE (with docker compose)" on
     16 "Kubernetes (kubectl)" on
     17 "Sops v${VERSION_SOPS}" on
-    18 "Postman" off
-    19 "Laravel installer" off
+    18 "Postman" on
+    19 "Laravel installer" on
     20 "Wine" off
     21 "MySql Community Server" off
     22 "SQLite (database tool)" off
@@ -725,9 +758,12 @@ options=(
     29 "Software Center" on
     30 "Remmina (remote desktop client)" off
     31 "Google Cloud SDK" on
-    32 "Popcorn Time v${VERSION_POPCORNTIME}" on
-    33 "ZSH Terminal Plugin" on
+    32 "Popcorn Time v${VERSION_POPCORNTIME}" off
+    33 "ZSH Terminal Plugin" off
     34 "Locust (http load tester)" off
+    35 "Java" on
+    36 "MVN" on
+    37 "Netbeans" on
 );
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty);
@@ -856,6 +892,9 @@ do
             if [[ ${IS_INSTALLED_PYTHON} -ne 1 ]]; then installPython; fi
             installLocust;
         ;;
+        35) installJAVA ;;
+        36) installMVN ;;
+        37) installNetbeans ;;
     esac
 done
 
