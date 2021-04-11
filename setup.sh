@@ -705,7 +705,7 @@ installMVN() {
 # Netbeans
 ##########################################################
 installNetbeans() {
-  installJAVA;;
+  
   title "Installing Netbeans";
   sudo apt update;
   sudo apt install -y netbeans;
@@ -713,6 +713,17 @@ installNetbeans() {
   breakLine;
 }
 
+# OpenShift Tools
+##########################################################
+installOC() {
+  
+  title "Installing OC Client Tools";
+  wget https://github.com/openshift/okd/releases/download/4.7.0-0.okd-2021-03-28-152009/openshift-client-linux-4.7.0-0.okd-2021-03-28-152009.tar.gz;
+  tar -xvf openshift-client-linux-4.7.0-0.okd-2021-03-28-152009.tar.gz;
+  sudo mv oc kubectl /usr/local/bin/;
+     
+  breakLine;
+}
 
 ###############################################################
 ## MAIN PROGRAM
@@ -764,6 +775,7 @@ options=(
     35 "Java" on
     36 "MVN" on
     37 "Netbeans" on
+    38 "OC Client Tools" on
 );
 
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty);
@@ -895,6 +907,7 @@ do
         35) installJAVA ;;
         36) installMVN ;;
         37) installNetbeans ;;
+        37) installOC ;;
     esac
 done
 
